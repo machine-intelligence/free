@@ -112,7 +112,7 @@ mkArg (VarT n) t
             , "in a constructor's argument type: `" ++ pprint t ++ "'" ]
           let tup = foldl AppT (TupleT $ length ts) ts
           xs <- mapM (const $ newName "x") ts
-          return $ Captured tup (LamE (map VarP xs) (TupE (map VarE xs)))
+          return $ Captured tup (LamE (map VarP xs) (TupE (map (Just . VarE) xs)))
         _ -> fail $ unlines
               [ "expected a type variable `" ++ pprint n ++ "'"
               , "or a type like (a1 -> ... -> aN -> " ++ pprint n ++ ")"
